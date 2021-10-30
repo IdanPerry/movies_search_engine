@@ -1,11 +1,11 @@
 """
-This module includes the class AZMovies.
+This module includes the class Solarmovie.
 
 Classes
 -------
-AZMovies
-    Manages all IMDb related interactions between the control panel
-    and the application features.
+Solarmovie
+    Manages Solarmovie related content, which includes scraping the content
+    and writing it to the related database using the views model.
 """
 
 import logging
@@ -25,10 +25,12 @@ class Solarmovie(Thread):
 
     CONTENT = {
         'movies': {'content_type': 'movie',
-                   'link': 'https://www2.solarmovie.to/movie/filter/movies.html'},
+                   'url': 'https://www2.solarmovie.to/movie/filter/movies/page-'},
         'tv-shows': {'content_type': 'tv-show',
-                     'link': ''}
+                     'url': ''}
     }
+
+    MAX_PAGES = 1
 
     def __init__(self, content):
         super().__init__()
@@ -37,8 +39,12 @@ class Solarmovie(Thread):
 
     def run(self):
         self.logger.debug('Importing Solarmovie content...')
-        content = ContentPage.by_soup(self._content['link']).get_content('Solar', 'soup')
-        content.sort()
+        imported_content = []
 
-        for item in content:
-            views.insert_show(item, 'Solarmovie', self._content['content_type'])
+        for page in range(self.MAX_PAGES):
+            url = f"{self._content['url']}{page+1}.html"
+            imported_content.extend(ContentPage.by_soup(url).get_content('Solar', 'soup'))
+            imported_content.sort()
+
+            for item in imported_content:
+                views.insert_content(item, 'Solarmovie', self._content['content_type'])

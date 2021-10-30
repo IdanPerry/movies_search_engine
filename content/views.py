@@ -13,7 +13,8 @@ def insert_data(content, content_type):
         data.save()
 
 
-def insert_show(content, source, content_type):
+def insert_content(content, source, content_type):
     with suppress(errors.lookup('23505'), IntegrityError):
-        show = models.Movie(title=content.name, type=content_type, source=source, link=content.link)
+        show = models.Movie(title=content.name, type=content_type, source=source,
+                            link=content.url, image=content.image)
         show.save()

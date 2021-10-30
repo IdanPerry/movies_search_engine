@@ -13,7 +13,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-from content.locators.imdb_locators import ItemLocators
+from content.locators.locators import IMDb
 
 
 class ImdbItem:
@@ -29,7 +29,7 @@ class ImdbItem:
 
     Attributes
     ----------
-    item : Tag
+    parent_tag : Tag
         The HTML tag which stores the movie or tv-show.
 
     Methods
@@ -41,7 +41,7 @@ class ImdbItem:
     rating
         Returns the contents rating as string.
     trailer
-        Returns a trailer link to the related content.
+        Returns a trailer url to the related content.
     seasons
         Returns the tv-show number of seasons as string.
     actors
@@ -51,21 +51,18 @@ class ImdbItem:
         Returns a description of the content as a string.
     """
 
-    # Used for cosmetic purpose when printing the rating property.
-    STAR_ICON = '\u2605'
-
-    def __init__(self, item):
+    def __init__(self, parent_tag):
         """
         Parameters
         ----------
-        item
+        parent_tag
             The tag object which stores the movie or tv-show.
         """
 
-        self._item = item
+        self._parent_tag = parent_tag
 
     def __repr__(self):
-        return f'{self.name} {self.year} {self.STAR_ICON}{self.rating}\n{self.actors}{self.description}\n'
+        return f'{self.name} {self.year} {self.rating}\n{self.actors}\n{self.description}\n'
 
     def __eq__(self, other):
         return self.name == other.name
@@ -80,7 +77,7 @@ class ImdbItem:
         and returns its name as a string.
         """
 
-        name = self._item.select_one(ItemLocators.NAME).string
+        name = self._parent_tag.select_one(IMDb.NAME).string
 
         if name is None:
             return ' '
@@ -105,7 +102,7 @@ class ImdbItem:
         """
 
         try:
-            content = self._item.select_one(ItemLocators.YEAR).string
+            content = self._parent_tag.select_one(IMDb.YEAR).string
             year = re.sub(r'[()]', '', content)
             # check if year represents an int
             int(year)
@@ -130,7 +127,7 @@ class ImdbItem:
         """
 
         try:
-            rating = self._item.select_one(ItemLocators.RATING).string
+            rating = self._parent_tag.select_one(IMDb.RATING).string
             # check if rating represents a float
             float(rating)
             return rating
@@ -142,10 +139,10 @@ class ImdbItem:
     def trailer(self) -> str:
         """
         Parses this object tag attribute which represents a movie or tv-show
-        and returns an IMDb watch trailer link.
+        and returns an IMDb watch trailer url.
         """
 
-        trailer = f"http://imdb.com{self._item.select_one(ItemLocators.TRAILER).attrs['href']}"
+        trailer = f"http://imdb.com{self._parent_tag.select_one(IMDb.TRAILER).attrs['href']}"
 
         if trailer is None:
             return ' '
@@ -171,7 +168,7 @@ class ImdbItem:
         try:
             # TODO: significantly slows down the program, don't use it
             page = requests.get(self.trailer).content
-            content = BeautifulSoup(page, 'html.parser').select_one(ItemLocators.SEASONS).string
+            content = BeautifulSoup(page, 'html.parser').select_one(IMDb.SEASONS).string
             seasons = re.sub(' seasons', '', content)
             # check if seasons represents an int
             int(seasons)
@@ -187,7 +184,7 @@ class ImdbItem:
         and returns a string representation of it's stars actors.
         """
 
-        actors = [actor.string for actor in self._item.select(ItemLocators.ACTORS)]
+        actors = [actor.string for actor in self._parent_tag.select(IMDb.ACTORS)]
 
         if actors is None:
             return ' '
@@ -205,7 +202,7 @@ class ImdbItem:
         """
 
         try:
-            description = self._item.select_one(ItemLocators.DESCRIPTION).string
+            description = self._parent_tag.select_one(IMDb.DESCRIPTION).string
 
             if description is None:
                 return ' '

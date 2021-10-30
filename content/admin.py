@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import MovieData, Movie
 from content.drivers.imdb import IMDb
 from content.drivers.solarmovie import Solarmovie
+from content.drivers.moviesjoy import MoviesJoy
 
 
 class DataAdmin(admin.ModelAdmin):
@@ -28,3 +29,4 @@ admin.site.register(Movie, MovieAdmin)
 # Start all drivers threads
 # IMDb(IMDb.CONTENT['movies']).start()
 # Solarmovie(Solarmovie.CONTENT['movies']).start()
+# MoviesJoy(MoviesJoy.CONTENT['movies']).start()

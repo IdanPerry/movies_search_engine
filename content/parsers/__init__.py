@@ -4,11 +4,11 @@ each representing a parsed object from a website.
 
 Modules
 -------
-imdb_item_parser
-    Contains classes that represent a parsed movie or tv-show
-    from IMDb website.
+imdb_data_parser
+    Contains a class that represents a parsed movie or tv-show
+    in IMDb website.
 
-Netflix_item_parser
-    Contains classes that represent a parsed movie or tv-show
-    from Netflix website.
+movie_parser
+    Contains classes that represent a parsed movie or tv-show in the
+    corresponding website.
 """

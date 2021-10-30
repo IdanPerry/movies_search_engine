@@ -21,14 +21,15 @@ from selenium.common.exceptions import TimeoutException
 import requests
 from bs4 import BeautifulSoup
 
-from content.locators import imdb_locators, solar_locators
-from content.parsers.imdb_item_parser import ImdbItem
-from content.parsers.solar_item_parser import SolarItem
+from content.locators import locators
+from content.parsers.imdb_data_parser import ImdbItem
+from content.parsers.movie_parser import SolarMovie, MoviesJoy
 
 # Modify this dictionary when adding more websites to scrape from
 WEBSITES = {
-    'IMDb': {'locator': imdb_locators.PageContentLocators.PAGE_CONTENT, 'parser': ImdbItem},
-    'Solar': {'locator': solar_locators.PageContentLocators.PAGE_CONTENT, 'parser': SolarItem}
+    'IMDb': {'locator': locators.IMDb.PAGE_CONTENT, 'parser': ImdbItem},
+    'Solar': {'locator': locators.Solarmovies.PAGE_CONTENT, 'parser': SolarMovie},
+    'MoviesJoy': {'locator': locators.MoviesJoy.PAGE_CONTENT, 'parser': MoviesJoy}
 }
 
 
@@ -146,11 +147,12 @@ class ContentPage:
             A list of Item objects from the parsed page.
         """
 
-        _items_list = None
+        _content_list = None
 
         if method == 'soup':
-            _items_list = self._source.select(WEBSITES[name]['locator'])
+            _content_list = self._source.select(WEBSITES[name]['locator'])
         elif method == 'selenium':
-            _items_list = self._source.find_element_by_css_selector(WEBSITES[name]['locator'])
+            _content_list = self._source.find_element_by_css_selector(WEBSITES[name]['locator'])
 
-        return [WEBSITES[name]['parser'](i) for i in _items_list]
+        # WEBSITES[name]['parser'] is instance of Movie class
+        return [WEBSITES[name]['parser'](content) for content in _content_list]

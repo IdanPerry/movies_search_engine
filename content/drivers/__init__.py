@@ -1,12 +1,13 @@
 """
-This package includes modules that handles the interaction
-between the control panel and the application features.
+This package includes modules that handles the corresponding website's
+content scraping and database.
 
 Modules
 -------
 imdb
-    Contains the IMDb class.
 
-netflix
-    Contains the Netflix class.
+solarmovie
+
+moviesjoy
+
 """
