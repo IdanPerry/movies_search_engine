@@ -6,15 +6,12 @@ from contextlib import suppress
 from content import models
 
 
-def insert_data(content, content_type):
-    with suppress(errors.lookup('23505'), IntegrityError):
-        data = models.MovieData(title=content.name, type=content_type, year=content.year, rating=content.rating,
-                                description=content.description, actors=content.actors, trailer=content.trailer)
-        data.save()
-
-
-def insert_content(content, source, content_type):
+def insert(content, source, content_type):
     with suppress(errors.lookup('23505'), IntegrityError):
         show = models.Movie(title=content.name, type=content_type, source=source,
-                            link=content.url, image=content.image)
+                            url=content.url, image=content.image)
         show.save()
+
+
+def index(request):
+    return render(request, 'index.html')

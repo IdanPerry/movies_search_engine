@@ -11,7 +11,7 @@ MoviesJoy
 import logging
 from threading import Thread
 
-from content.pages.content import ContentPage
+from services.pages.content import ContentPage
 from content import views
 
 
@@ -44,5 +44,5 @@ class MoviesJoy(Thread):
             imported_content.extend(ContentPage.by_soup(url).get_content('MoviesJoy', 'soup'))
             imported_content.sort()
 
-            for item in imported_content:
-                views.insert_content(item, 'MoviesJoy', self._content['content_type'])
+            # for item in imported_content:
+            #     views.insert(item, 'MoviesJoy', self._content['content_type'])

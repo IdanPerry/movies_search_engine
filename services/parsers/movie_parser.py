@@ -9,7 +9,7 @@ Movie
 
 from abc import ABC
 
-from content.locators import locators
+from services.locators import locators
 
 
 class Movie(ABC):

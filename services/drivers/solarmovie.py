@@ -11,7 +11,7 @@ Solarmovie
 import logging
 from threading import Thread
 
-from content.pages.content import ContentPage
+from services.pages.content import ContentPage
 from content import views
 
 
@@ -30,7 +30,7 @@ class Solarmovie(Thread):
                      'url': ''}
     }
 
-    MAX_PAGES = 1
+    MAX_PAGES = 4
 
     def __init__(self, content):
         super().__init__()
@@ -47,4 +47,4 @@ class Solarmovie(Thread):
             imported_content.sort()
 
             for item in imported_content:
-                views.insert_content(item, 'Solarmovie', self._content['content_type'])
+                views.insert(item, 'Solarmovie', self._content['content_type'])

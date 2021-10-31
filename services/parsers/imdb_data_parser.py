@@ -13,7 +13,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-from content.locators.locators import IMDb
+from services.locators.locators import IMDb
 
 
 class ImdbItem:

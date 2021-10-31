@@ -21,9 +21,9 @@ from selenium.common.exceptions import TimeoutException
 import requests
 from bs4 import BeautifulSoup
 
-from content.locators import locators
-from content.parsers.imdb_data_parser import ImdbItem
-from content.parsers.movie_parser import SolarMovie, MoviesJoy
+from services.locators import locators
+from services.parsers.imdb_data_parser import ImdbItem
+from services.parsers.movie_parser import SolarMovie, MoviesJoy
 
 # Modify this dictionary when adding more websites to scrape from
 WEBSITES = {

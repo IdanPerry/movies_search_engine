@@ -1,17 +1,8 @@
 from django.contrib import admin
 
-from .models import MovieData, Movie
-from content.drivers.imdb import IMDb
-from content.drivers.solarmovie import Solarmovie
-from content.drivers.moviesjoy import MoviesJoy
-
-
-class DataAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'type', 'year', 'rating')
-    list_display_links = ('id', 'title')
-    list_filter = ('type',)
-    search_fields = ('title', 'year', 'actors')
-    list_per_page = 50
+from content.models import Movie
+from services.drivers.solarmovie import Solarmovie
+from services.drivers.moviesjoy import MoviesJoy
 
 
 class MovieAdmin(admin.ModelAdmin):
@@ -22,11 +13,6 @@ class MovieAdmin(admin.ModelAdmin):
     list_per_page = 50
 
 
-# Register all models
-admin.site.register(MovieData, DataAdmin)
 admin.site.register(Movie, MovieAdmin)
-
-# Start all drivers threads
-# IMDb(IMDb.CONTENT['movies']).start()
 # Solarmovie(Solarmovie.CONTENT['movies']).start()
 # MoviesJoy(MoviesJoy.CONTENT['movies']).start()

@@ -11,8 +11,8 @@ IMDb
 import logging
 from threading import Thread
 
-from content.pages.content import ContentPage
-from content import views
+from services.pages.content import ContentPage
+from content_data import views
 
 
 class IMDb(Thread):
@@ -50,4 +50,4 @@ class IMDb(Thread):
 
             # Insert movies to the database
             for item in imported_content:
-                views.insert_data(item, self._content['content_type'])
+                views.insert(item, self._content['content_type'])
