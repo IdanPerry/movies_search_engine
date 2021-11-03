@@ -1,5 +1,94 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <h1>Hello i'm using django! :-)</h1>
+
+<div class="header-background-img" style="background-image:url('static/img/background_4.jpg');">
+    <div class="container">
+        <header id="header">
+            <nav class="nav-header">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">Favorites</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+    <div class="search-main">
+        <h1>Movies & Tv shows search engine</h1>
+        <a class="search-btn" href="#">Search Movies</a>
+    </div>
+</div>
+
+<div class="container-main">
+    <main id="content-main">
+        <div class="content">
+            <ul>
+                {% for movie in paged_movies %}
+                    <li>
+                        <figure>
+                            <a href="{{ movie.url }}" target="_blank"><img src="{{ movie.image }}" alt="{{ movie.title }}"></a>
+                                <figcaption>
+                                    <h4>{{ movie.title }}</h4>
+                                    <p></p>
+                                </figcaption>
+                        </figure>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="pagination-container">
+            <ul class="pagination">
+                {% if paged_movies.has_previous %}
+                    <i class="page-item">
+                        <a href="?page={{ paged_movies.previous_page_number }}"><<</a>
+                        <a class="page-link" href="?page=1">1</a>
+                    </i>
+                {% endif %}
+                {% if paged_movies.previous_page_number != 1 %}
+                    <i class="page-item">
+                        <a class="page-link" href="?page={{ paged_movies.previous_page_number }}">{{ paged_movies.previous_page_number }}</a>
+                    </i>
+                {% endif %}
+                {% for j in paged_movies.paginator.page_range %}
+                    {% if paged_movies.number == j %}
+                        <i class="page-item active">
+                            <a class="page-link active">{{ j }}</a>
+                        </i>
+                    {% endif %}
+                {% endfor %}
+                {% if paged_movies.has_next %}
+                    <i class="page-item">
+                        <a class="page-link" href="?page={{ paged_movies.next_page_number }}">{{ paged_movies.next_page_number }}</a>
+                    </i>
+                    {% if paged_movies.next_page_number != paged_movies.paginator.num_pages %}
+                        <i class="page-item">
+                            <a class="page-link" href="?page={{ paged_movies.paginator.num_pages }}">{{ paged_movies.paginator.num_pages }}</a>
+                        </i>
+                    {% endif %}
+                    <a href="?page={{ paged_movies.next_page_number }}">>></a>
+                {% endif %}
+            </ul>
+        </div>
+    </main>
+</div>
+
+<div class="footer-background-img" style="background-image:url('static/img/background_2.jpg');">
+    <footer id="footer">
+        <div class="footer">
+            <ul>
+                <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fab fa-vk"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+</div>
+
 {% endblock %}

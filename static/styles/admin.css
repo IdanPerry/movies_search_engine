@@ -2,8 +2,6 @@
     DJANGO Admin styles
 */
 
-@import url(fonts.css);
-
 /* VARIABLE DEFINITIONS */
 :root {
   --primary: #277899;
@@ -22,14 +20,14 @@
   --header-link-color: var(--primary-fg);
 
   --breadcrumbs-fg: #EEE;
-  --breadcrumbs-link-fg: var(--body-bg);
+  --breadcrumbs-link-fg: var(--body-fg);
   --breadcrumbs-bg: var(--primary);
 
   --link-fg: #EEE;
   --link-hover-color: #FFF;
   --link-selected-fg: #888;
 
-  --hairline-color: #888;
+  --hairline-color: #555;
   --border-color: #888;
 
   --error-fg: #ba2121;
@@ -44,11 +42,11 @@
 
   --button-fg: #EEE;
   --button-bg: var(--primary);
-  --button-hover-bg: #609ab6;
+  --button-hover-bg: #3194bb;
   --default-button-bg: var(--secondary);
-  --default-button-hover-bg: #205067;
-  --close-button-bg: #888; /* Previously #bbb, contrast 1.92 */
-  --close-button-hover-bg: #747474;
+  --default-button-hover-bg: #1f648f;
+  --close-button-bg: rgb(48, 141, 133); /* Previously #bbb, contrast 1.92 */
+  --close-button-hover-bg: rgb(56, 185, 174);
   --delete-button-bg: #ba2121;
   --delete-button-hover-bg: #a41515;
 
@@ -716,7 +714,7 @@ div.breadcrumbs a {
 }
 
 div.breadcrumbs a:focus, div.breadcrumbs a:hover {
-    color: var(--breadcrumbs-fg);
+    color: #BBB;
 }
 
 /* ACTION ICONS */
@@ -769,18 +767,18 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 .object-tools a {
-    border-radius: 15px;
+    border-radius: 4px;
 }
 
 .object-tools a:link, .object-tools a:visited {
     display: block;
     float: left;
-    padding: 3px 12px;
+    padding: 6px 12px;
     background: var(--object-tools-bg);
     color: var(--object-tools-fg);
     font-weight: 400;
-    font-size: 11px;
-    text-transform: uppercase;
+    font-size: 12px;
+    text-transform: None;
     letter-spacing: 0.5px;
 }
 
@@ -959,7 +957,7 @@ table#change-history tbody th {
 #user-tools a:focus, #user-tools a:hover {
     text-decoration: none;
     border-bottom-color: #EEE;
-    color: #FFF;
+    color: rgb(255, 255, 255);
 }
 
 /* SIDEBAR */

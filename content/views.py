@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.db.utils import IntegrityError
+from django.core.paginator import EmptyPage, Paginator, PageNotAnInteger
 from psycopg2 import errors
 from contextlib import suppress
 
 from content import models
+from content.models import Movie
 
+MAX_ITEMS = 90
 
 def insert(content, source, content_type):
     with suppress(errors.lookup('23505'), IntegrityError):
@@ -14,4 +17,13 @@ def insert(content, source, content_type):
 
 
 def index(request):
-    return render(request, 'index.html')
+    movies = Movie.objects.all()
+    paginator = Paginator(movies, MAX_ITEMS)
+    page = request.GET.get('page')
+    paged_movies = paginator.get_page(page)
+
+    context = {
+        'paged_movies': paged_movies
+    }
+
+    return render(request, 'index.html', context)
