@@ -12,7 +12,6 @@ import logging
 from threading import Thread
 
 from services.pages.content import ContentPage
-from content import views
 
 
 class Solarmovie(Thread):
@@ -33,18 +32,30 @@ class Solarmovie(Thread):
     MAX_PAGES = 4
 
     def __init__(self, content):
+        """
+        Parameters
+        ----------
+        content
+        """
+
         super().__init__()
         self._content = content
         self.logger = logging.getLogger('scraping Solarmovie')
+        self._imported_content = []
+
+    def get_content(self) -> list:
+        """
+        Return
+        ------
+        List of movies.
+        """
+
+        return self._imported_content
 
     def run(self):
         self.logger.debug('Importing Solarmovie content...')
-        imported_content = []
 
         for page in range(self.MAX_PAGES):
             url = f"{self._content['url']}{page+1}.html"
-            imported_content.extend(ContentPage.by_soup(url).get_content('Solar', 'soup'))
-            imported_content.sort()
-
-            for item in imported_content:
-                views.insert(item, 'Solarmovie', self._content['content_type'])
+            self._imported_content.extend(ContentPage.by_soup(url).get_content('Solar', 'soup'))
+            self._imported_content.sort()

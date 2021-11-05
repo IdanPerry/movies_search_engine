@@ -816,77 +816,37 @@ table#change-history tbody th {
 
 /* PAGE STRUCTURE */
 
-#container {
-    position: relative;
-    width: 100%;
-    min-width: 980px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+.container-sidebar {
+    width: 150px;
+    margin: 30px 0px 0px 0px;
 }
 
-#container > div {
-    flex-shrink: 0;
+.container-sidebar > ul {
+    padding-top: 168px;
 }
 
-#container > .main {
-    display: flex;
-    flex: 1 0 auto;
+.container-sidebar > ul > li{
+    list-style: none;
+    margin: 10px 13px 52px -10px;
 }
 
-.main > .content {
-    flex:  1 0;
-    max-width: 100%;
+.container-sidebar > ul > li > a {
+    display: block;
+    background-color: var(--object-tools-bg);
+    padding: 10px 8px;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-#content {
-    padding: 20px 40px;
-}
-
-.dashboard #content {
-    width: 600px;
-}
-
-#content-main {
-    float: left;
-    width: 100%;
-}
-
-#content-related {
-    float: right;
-    width: 260px;
-    position: relative;
-    margin-right: -300px;
+.container-sidebar > ul > li > a:hover {
+    background-color: var(--object-tools-hover-bg);
 }
 
 #footer {
     clear: both;
     padding: 10px;
-}
-
-/* COLUMN TYPES */
-
-.colMS {
-    margin-right: 300px;
-}
-
-.colSM {
-    margin-left: 300px;
-}
-
-.colSM #content-related {
-    float: left;
-    margin-right: 0;
-    margin-left: -300px;
-}
-
-.colSM #content-main {
-    float: right;
-}
-
-.popup .colM {
-    width: auto;
 }
 
 /* HEADER */

@@ -6,7 +6,7 @@
     --secondary-bg: #205274;
     --secondary-fg: #CCC;
     --darker-bg: #080808;
-    --shadow: 0px 0px 10px 0px #000;
+    --shadow: 0px 0px 7px 0px #EEE;
   }
   
   /* General tags */
@@ -69,7 +69,7 @@
     margin: 0;
     padding: 0;
   }
-  
+
   #header {
     display: block;
     position: relative;
@@ -83,6 +83,7 @@
   
   .container {
     overflow: auto;
+    padding-left: 40px;
     background-color: var(--primary-bg)
   }
   
@@ -101,14 +102,12 @@
   .header-background-img {
     position: relative;
     z-index: 1;
-  
     background-position: 0px -150px;
     background-repeat: no-repeat;
     background-size: cover;
   }
   
   .header-background-img::after, .footer-background-img::after {
-    display: block;
     position: absolute;
     top: 0;
     left: 0;
@@ -122,8 +121,7 @@
   }
   
   .search-main {
-    padding-top: 50px;
-    padding-bottom: 620px;
+    padding: 50px 0px 620px 80px;
     display: block;
     position: relative;
     width: 100%;
@@ -154,19 +152,18 @@
     border-color: inherit;
   }
   
+  .container-main {
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+
   main {
-    display: block;
-    position: relative;
-    width: 100%;
-    text-align: left;
-    word-wrap: break-word;
-    margin: 0 auto;
     color: var(--secondary-fg);
   }
   
   .content {
     position: relative;
-    margin: -80px 0 0 0;
+    margin: -100px 0 0 0;
     z-index: 1;
   }
   
@@ -185,8 +182,6 @@
   }
   
   .content figure figcaption .heading {
-    font-size: 1.2rem;
-    font-weight: 700;
     margin: 0 0 20px 0;
     line-height: normal;
   }
@@ -194,12 +189,19 @@
   .content ul li {
     display: block;
     float: left;
-    margin: 0 0 0 2%;
+    margin: 2% 0 2% 2%;
     width: 15%;
+    perspective: 700px;
   }
   
   figure {
     margin: 0;
+    transition: transform 0.7s;
+    transform-style: preserve-3d;
+  }
+  
+  .content ul li:hover figure {
+    transform: rotateY(35deg);
   }
   
   figure a {
@@ -207,42 +209,26 @@
     position: relative;
     max-width: 100%;
   }
-  
-  figure a img {
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-  }
-  
-  figure a::before, figure a::after {
+
+  figure a::before {
     display: block;
     position: absolute;
     content: "";
-    text-align: center;
     opacity: 0;
     border-radius: 20px;
-  }
-  
-  figure a::before {
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
   }
   
-  figure a::after {
-    top: 50%;
-    left: 50%;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    margin: -25px 0 0 -25px;
-    font-weight: 900;
-    content: "";
-    font-size: 28px;
+  figure a img {
+    border-radius: 20px;
+    box-shadow: var(--shadow);
   }
   
   figure a:hover::before {
-    background-color: rgba(0, 0, 0, 0.70);
+    /*background-color: rgba(0, 0, 0, 0.70);*/
   }
   
   figure a:hover::before, figure a:hover::after, .page-link::after {
@@ -300,7 +286,7 @@
   
   @media screen and (min-width: 1140px) {
     header, main, footer, .search-main {
-      max-width: 1600px;
+      max-width: 100%;
     }
   }
   
@@ -308,15 +294,27 @@
     header, main, footer, .search-main {
       max-width: 95%;
     }
+
+    .header-background-img {
+      background-position: top center;
+    }
   }
   
   @media screen and (max-width: 978px) {
     header, main, footer, .search-main {
       max-width: 90%;
     }
+
+    .header-background-img {
+      background-position: top center;
+    }
   }
   
   @media screen and (max-width: 750px) {
+    .header-background-img {
+      background-position: top center;
+    }
+
     .content ul li {
       display: block;
       float: none;
