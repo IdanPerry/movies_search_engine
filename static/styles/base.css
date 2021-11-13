@@ -26,12 +26,9 @@
     background-color: var(--primary-bg);
   }
   
-  div {
-    clear: both;
-  }
-  
   ul {
-    clear: both;
+    padding: 0;
+    margin: 0;
   }
   
   li {
@@ -61,7 +58,7 @@
   }
   
   h4 {
-    margin: 0 0 20px 0;
+    margin: 0 0 10px 0;
     line-height: normal;
   }
   
@@ -81,7 +78,7 @@
     background-color: inherit;
   }
   
-  .container {
+  .container-header {
     overflow: auto;
     padding-left: 40px;
     background-color: var(--primary-bg)
@@ -120,7 +117,7 @@
     background-image: linear-gradient(rgba(20,22,27, 0) 0%,rgba(20,22,27, 1) 100%);
   }
   
-  .search-main {
+  .title-container {
     padding: 50px 0px 620px 80px;
     display: block;
     position: relative;
@@ -128,13 +125,8 @@
     text-align: left;
     word-wrap: break-word;
     margin: 0 auto;
-  }
-  
-  .search-main h1 {
-    font-size: 40px;
-    margin: 0 0 20px 0;
-    line-height: normal;
-    color: #AAA
+    font-size: 30px;
+    color: var(--primary-fg);
   }
   
   .search-btn {
@@ -166,14 +158,15 @@
     margin: -100px 0 0 0;
     z-index: 1;
   }
-  
-  .content > ul > li {
-    margin-bottom: 50px;
+
+  .content ul {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
   }
-  
-  .content > ul > li:nth-child(6n + 1) {
-    margin-left: 0;
-    clear: left;
+
+  .content ul li {
+    margin: 20px 0px 20px 0px;
+    perspective: 700px;
   }
   
   .content figure figcaption {
@@ -186,53 +179,52 @@
     line-height: normal;
   }
   
-  .content ul li {
-    display: block;
-    float: left;
-    margin: 2% 0 2% 2%;
-    width: 15%;
-    perspective: 700px;
-  }
-  
   figure {
-    margin: 0;
     transition: transform 0.7s;
     transform-style: preserve-3d;
+    max-width: 200px;
   }
   
   .content ul li:hover figure {
     transform: rotateY(35deg);
   }
   
-  figure a {
-    display: inline-block;
-    position: relative;
-    max-width: 100%;
-  }
-
-  figure a::before {
-    display: block;
-    position: absolute;
-    content: "";
-    opacity: 0;
-    border-radius: 20px;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-  
   figure a img {
     border-radius: 20px;
     box-shadow: var(--shadow);
   }
-  
-  figure a:hover::before {
-    /*background-color: rgba(0, 0, 0, 0.70);*/
+
+  .year {
+    float: left;
+    font-size: 14px;
   }
-  
-  figure a:hover::before, figure a:hover::after, .page-link::after {
-    opacity: 1;
+
+  .rating {
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    height: 20px;
+    float: right;
+    padding-left: 3px;
+  }
+
+  .rating-imdb {
+    background-color: darkgoldenrod;
+    color: var(--darker-bg);
+    padding: 0px 4px;
+    float: left;
+    border-radius: 4px 0px 0px 4px;
+    font-size: 14px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
+
+  .rating-value {
+    float: right;
+    background-color: var(--darker-bg);
+    color: var(--secondary-fg);
+    padding: 0px 4px;
+    border-radius: 0px 4px 4px 0px;
+    font-size: 12px;
+    font-weight: bold;
   }
   
   .pagination-container {
@@ -247,11 +239,6 @@
     margin-left: auto;
     margin-right: auto;
     align-content: center;
-  }
-  
-  .page-item {
-    float: left;
-    margin-right: 4px;
   }
   
   .page-link {
@@ -272,10 +259,6 @@
     background-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
   }
   
-  footer {
-    
-  }
-  
   *, *::before, *::after {
     transition: all 0.3s ease-in-out;
   }
@@ -286,23 +269,27 @@
   
   @media screen and (min-width: 1140px) {
     header, main, footer, .search-main {
-      max-width: 100%;
+  
     }
   }
   
-  @media screen and (min-width: 978px) and (max-width: 1140px) {
+  @media screen and (max-width: 1400px) {
     header, main, footer, .search-main {
-      max-width: 95%;
+   
     }
 
     .header-background-img {
       background-position: top center;
     }
+
+    .content ul {
+      display: grid;
+      grid-template-columns: auto auto auto auto;
+    }
   }
   
   @media screen and (max-width: 978px) {
     header, main, footer, .search-main {
-      max-width: 90%;
     }
 
     .header-background-img {
@@ -315,11 +302,8 @@
       background-position: top center;
     }
 
-    .content ul li {
-      display: block;
-      float: none;
-      width: auto;
-      margin: 0;
-      padding: 60px;
+    .content ul {
+      display: grid;
+      grid-template-columns: auto auto;
     }
   }

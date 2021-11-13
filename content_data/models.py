@@ -7,7 +7,7 @@ TYPE = [
 
 
 class MovieData(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
     type = models.CharField(max_length=7, choices=TYPE, default='movie')
     year = models.IntegerField()
     rating = models.DecimalField(max_digits=3, decimal_places=1)

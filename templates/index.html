@@ -3,22 +3,22 @@
 
 {% block content %}
 
-<div class="header-background-img" style="background-image:url('static/img/background_4.jpg');">
-    <div class="container">
+<div class="header-background-img" style="background-image:url('static/img/background_5.jpg');">
+    <div class="container-header">
         <header id="header">
             <nav class="nav-header">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">Movies</a></li>
-                    <li><a href="#">TV Shows</a></li>
-                    <li><a href="#">Favorites</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">Movies</a></li>
+                    <li><a href="/">TV Shows</a></li>
+                    <li><a href="/">Favorites</a></li>
+                    <li><a class="search-btn" href="/">Search Movies</a></li>
                 </ul>
             </nav>
         </header>
     </div>
-    <div class="search-main">
-        <h1>Movies & Tv shows search engine</h1>
-        <a class="search-btn" href="#">Search Movies</a>
+    <div class="title-container">
+        <h1>The Movies Search Engine</h1>
     </div>
 </div>
 
@@ -32,7 +32,21 @@
                             <a href="{{ movie.url }}" target="_blank"><img src="{{ movie.image }}" alt="{{ movie.title }}"></a>
                                 <figcaption>
                                     <h4>{{ movie.title }}</h4>
-                                    <p>{{ '2021 7.4'}}</p>
+                                    <div class="year">
+                                        {% if movie.year != 0 %}
+                                            {{ movie.year }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="rating">
+                                        {% if movie.rating != 0.0 %}
+                                            <div class="rating-imdb">
+                                                IMDb
+                                            </div>
+                                            <div class="rating-value">
+                                                {{ movie.rating }}
+                                            </div>                             
+                                        {% endif %}                                
+                                    </div>
                                 </figcaption>
                         </figure>
                     </li>
@@ -78,16 +92,7 @@
 
 <div class="footer-background-img" style="background-image:url('static/img/background_2.jpg');">
     <footer id="footer">
-        <div class="footer">
-            <ul>
-                <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fab fa-vk"></i></a></li>
-            </ul>
-        </div>
+
     </footer>
 </div>
 

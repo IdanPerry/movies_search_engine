@@ -11,7 +11,7 @@ Solarmovie
 import logging
 from threading import Thread
 
-from services.pages.content import ContentPage
+from services.scrapers.content import ContentPage
 
 
 class Solarmovie(Thread):
@@ -22,40 +22,41 @@ class Solarmovie(Thread):
     Inherits from Thread class.
     """
 
-    CONTENT = {
-        'movies': {'content_type': 'movie',
-                   'url': 'https://www2.solarmovie.to/movie/filter/movies/page-'},
-        'tv-shows': {'content_type': 'tv-show',
-                     'url': ''}
-    }
+    MOVIES = 'https://www2.solarmovie.to/movie/filter/movies/page-'
+    TV_SHOWS = ''
+    PAGES = 40
 
-    MAX_PAGES = 4
-
-    def __init__(self, content):
+    def __init__(self, url: str):
         """
         Parameters
         ----------
-        content
+        url : str
+            The url to get the content from.
         """
 
         super().__init__()
-        self._content = content
+        self._url = url
+        self._content = []
+        self._name = 'Solarmovie'
         self.logger = logging.getLogger('scraping Solarmovie')
-        self._imported_content = []
 
-    def get_content(self) -> list:
+    @property
+    def name(self) -> str:
+        return self._name
+
+    def get_content(self) -> set:
         """
         Return
         ------
-        List of movies.
+        List of movies or tv shows.
         """
 
-        return self._imported_content
+        return set(self._content)
 
     def run(self):
         self.logger.debug('Importing Solarmovie content...')
+        urls = [f"{self._url}{page+1}.html" for page in range(self.PAGES)]
+        self._content.extend(ContentPage.by_soup(urls).get_content('Solar', 'soup'))
 
-        for page in range(self.MAX_PAGES):
-            url = f"{self._content['url']}{page+1}.html"
-            self._imported_content.extend(ContentPage.by_soup(url).get_content('Solar', 'soup'))
-            self._imported_content.sort()
+        for item in self._content:
+            item.source = self._name

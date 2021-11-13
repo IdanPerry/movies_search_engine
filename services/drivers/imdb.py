@@ -11,43 +11,39 @@ IMDb
 import logging
 from threading import Thread
 
-from services.pages.content import ContentPage
-from content_data import views
+from services.scrapers.content import ContentPage
 
 
 class IMDb(Thread):
     """
     This class manages IMDb related content, which includes scraping the content
-    and writing it to the related database using the views model.
+    and writing it to the related database using  content_data.views module.
 
     Inherits from Thread class.
     """
 
-    CONTENT = {
-        'movies': {'content_type': 'movie',
-                   'url': 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&count=250'},
-        'tv-shows': {'content_type': 'tv-show',
-                     'url': 'https://www.imdb.com/search/title/?title_type=tv_series&count=250'}
-    }
-
-    MAX_TITLES = 1000
+    MOVIES = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&count=250'
+    TV_SHOWS = 'https://www.imdb.com/search/title/?title_type=tv_series&count=250'
+    MAX_TITLES = 5000
     TITLES_PER_PAGE = 250
+    PAGES = MAX_TITLES // TITLES_PER_PAGE
 
-    def __init__(self, content):
+    def __init__(self, url):
         super().__init__()
-        self._content = content
+        self._url = url
+        self._content = []
         self.logger = logging.getLogger('scraping IMDb')
+
+    def get_content(self) -> set:
+        """
+        Return
+        ------
+        List of movies or tv shows.
+        """
+
+        return set(self._content)
 
     def run(self):
         self.logger.debug('Importing IMDb content...')
-        imported_content = []
-
-        # Iterating over all the pages
-        for i in range(self.MAX_TITLES//self.TITLES_PER_PAGE):
-            url = f"{self._content['url']}&start={i*self.TITLES_PER_PAGE + 1}&ref_=adv_nxt"
-            imported_content.extend(ContentPage.by_soup(url).get_content('IMDb', 'soup'))
-            imported_content.sort()
-
-            # Insert movies to the database
-            for item in imported_content:
-                views.insert(item, self._content['content_type'])
+        urls = [f"{self._url}&start={i*self.TITLES_PER_PAGE + 1}&ref_=adv_nxt" for i in range(self.PAGES)]
+        self._content = ContentPage.by_soup(urls).get_content('IMDb', 'soup')

@@ -1,9 +1,5 @@
 from django.contrib import admin
-
 from content_data.models import MovieData
-from services.drivers.imdb import IMDb
-from services.drivers.solarmovie import Solarmovie
-from services.drivers.moviesjoy import MoviesJoy
 
 
 class DataAdmin(admin.ModelAdmin):
@@ -15,4 +11,3 @@ class DataAdmin(admin.ModelAdmin):
 
 
 admin.site.register(MovieData, DataAdmin)
-# IMDb(IMDb.CONTENT['movies']).start()

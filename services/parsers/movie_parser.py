@@ -46,26 +46,28 @@ class Movie(ABC):
         self._name = ''
         self._url = ''
         self._image = ''
+        self._type = ''
+        self._source = ''
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self._name} {self._url} {self._image}'
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self._name == other.name
 
-    def __lt__(self, other):
-        return self._name < other.name
+    def __hash__(self) -> int:
+        return hash(self._name)
 
     @property
     def name(self) -> str:
         """
-R       Returns the movie or tv-show name.
+        Returns the movie or tv-show name.
         """
 
         return self._name
 
     @name.setter
-    def name(self, value=str):
+    def name(self, value: str):
         self._name = value
 
     @property
@@ -77,7 +79,7 @@ R       Returns the movie or tv-show name.
         return self._url
 
     @url.setter
-    def url(self, value=str):
+    def url(self, value: str):
         self._url = value
 
     @property
@@ -89,9 +91,35 @@ R       Returns the movie or tv-show name.
         return self._image
 
     @image.setter
-    def image(self, value=str):
+    def image(self, value: str):
         self._image = value
 
+    @property
+    def type(self) -> str:
+        """
+        Returns weather this content is a movie or tv show.
+        """
+
+        return self._type
+
+    @type.setter
+    def type(self, value: str):
+        self._type = value
+
+    @property
+    def source(self) -> str:
+        """
+        Returns the website's name this content came from.
+        """
+
+        return self._source
+
+    @source.setter
+    def source(self, value: str):
+        self._source = value
+
+
+# Inheriting classes
 
 class SolarMovie(Movie):
     def __init__(self, parent_tag):

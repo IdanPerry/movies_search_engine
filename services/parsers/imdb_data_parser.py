@@ -61,14 +61,14 @@ class ImdbItem:
 
         self._parent_tag = parent_tag
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.name} {self.year} {self.rating}\n{self.actors}\n{self.description}\n'
 
-    def __eq__(self, other):
-        return self.name == other.name
+    def __eq__(self, other) -> bool:
+        return self.name == other.name and self.year == other.year
 
-    def __lt__(self, other):
-        return self.name < other.name
+    def __hash__(self) -> int:
+        return hash(self.name)
 
     @property
     def name(self) -> str:
