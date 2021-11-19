@@ -10,7 +10,7 @@ class Movie(models.Model):
     title = models.CharField(max_length=200, unique=True)
     type = models.CharField(max_length=7, choices=TYPE)
     year = models.IntegerField(blank=True, null=True)
-    rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
+    rating = models.FloatField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     actors = models.CharField(max_length=300, blank=True, null=True)
     trailer = models.CharField(max_length=300, blank=True, null=True)

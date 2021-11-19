@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="search-form-container">
+        <form action="{% url 'search' %}" method="get" novalidate>       
+                {{ form.title }}
+                {{ form.from_year }}
+                {{ form.to_year }}
+                {{ form.from_rating}}
+                {{ form.to_rating }}
+                {{ form.actors }}
+                <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="search-results">
+        <ul>
+            {% for query in query_list %}
+                <li>
+                    <figure>
+                        <a href="{{ query.url }}" target="_blank"><img src="{{ query.image }}" alt="{{ query.title }}"></a>
+                            <figcaption>
+                                <h4>{{ query.title }}</h4>
+                                <div class="year">
+                                    {% if query.year != 0 %}
+                                        {{ query.year }}
+                                    {% endif %}
+                                </div>
+                                <div class="rating">
+                                    {% if query.rating != 0.0 %}
+                                        <div class="rating-imdb">
+                                            IMDb
+                                        </div>
+                                        <div class="rating-value">
+                                            {{ query.rating }}
+                                        </div>                             
+                                    {% endif %}                                
+                                </div>
+                            </figcaption>
+                    </figure>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

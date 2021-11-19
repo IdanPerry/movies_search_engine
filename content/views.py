@@ -2,9 +2,11 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.db.utils import IntegrityError
+from django.db.models import Q
 from psycopg2 import errors
 
 from content import models
+from content.forms import Search
 from content.models import Movie
 from content.movie import MovieContent
 from content_data.models import MovieData
@@ -83,3 +85,50 @@ def index(request):
     }
 
     return render(request, 'index.html', context)
+
+
+def search(request):
+    form = Search()
+
+    queryset_list = None
+
+    if request.GET:
+        title = request.GET.get('title')
+        if not title:
+            title = ''
+
+        from_year = request.GET.get('from_year')
+        if not from_year:
+            from_year = 0
+
+        to_year = request.GET.get('to_year')
+        if not to_year:
+            to_year = 2050
+
+        from_rating = request.GET.get('from_rating')
+        if not from_rating:
+            from_rating = 0.0
+
+        to_rating = request.GET.get('to_rating')
+        if not to_rating:
+            to_rating = 10.0
+
+        actors = request.GET.get('actors')
+        if not actors:
+            actors = ''
+
+        queryset_list = Movie.objects.filter(
+            Q(title__icontains=title) & 
+            Q(year__gte=from_year) & 
+            Q(year__lte=to_year) &
+            Q(rating__gte=from_rating) &
+            Q(rating__lte=to_rating) &
+            Q(actors__icontains=actors)
+            )
+
+    context = {
+        'form': form,
+        'query_list': queryset_list,
+    }
+
+    return render(request, 'search.html', context)
