@@ -1,43 +1,72 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="search-form-container">
-        <form action="{% url 'search' %}" method="get" novalidate>       
-                {{ form.title }}
-                {{ form.from_year }}
-                {{ form.to_year }}
-                {{ form.from_rating}}
-                {{ form.to_rating }}
-                {{ form.actors }}
-                <button type="submit">Search</button>
-        </form>
-    </div>
-    <div class="search-results">
-        <ul>
-            {% for query in query_list %}
-                <li>
-                    <figure>
-                        <a href="{{ query.url }}" target="_blank"><img src="{{ query.image }}" alt="{{ query.title }}"></a>
-                            <figcaption>
-                                <h4>{{ query.title }}</h4>
-                                <div class="year">
-                                    {% if query.year != 0 %}
-                                        {{ query.year }}
-                                    {% endif %}
-                                </div>
-                                <div class="rating">
-                                    {% if query.rating != 0.0 %}
-                                        <div class="rating-imdb">
-                                            IMDb
-                                        </div>
-                                        <div class="rating-value">
-                                            {{ query.rating }}
-                                        </div>                             
-                                    {% endif %}                                
-                                </div>
-                            </figcaption>
-                    </figure>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+
+<div class="container-main">
+    <main id="content-main">
+        <div class="search-results">
+            <ul>
+                {% for query in query_list %}
+                    <li>
+                        <figure>
+                            <a href="{{ query.url }}" target="_blank"><img src="{{ query.image }}" alt="{{ query.title }}"></a>
+                                <figcaption>
+                                    <h4>{{ query.title }}</h4>
+                                    <div class="year">
+                                        {% if query.year != 0 %}
+                                            {{ query.year }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="rating">
+                                        {% if query.rating != 0.0 %}
+                                            <div class="rating-imdb">
+                                                IMDb
+                                            </div>
+                                            <div class="rating-value">
+                                                {{ query.rating }}
+                                            </div>                             
+                                        {% endif %}                                
+                                    </div>
+                                </figcaption>
+                        </figure>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+  
+        <div class="pagination-container">
+            <ul class="pagination">
+                {% if query_list.has_previous %}
+                    <i class="page-item">
+                        <a href="?page={{ query_list.previous_page_number }}"><<</a>
+                        <a class="page-link" href="?page=1">1</a>
+                    </i>
+                {% endif %}
+                {% if query_list.previous_page_number != 1 %}
+                    <i class="page-item">
+                        <a class="page-link" href="?page={{ query_list.previous_page_number }}">{{ query_list.previous_page_number }}</a>
+                    </i>
+                {% endif %}
+                {% for j in query_list.paginator.page_range %}
+                    {% if query_list.number == j %}
+                        <i class="page-item active">
+                            <a class="page-link active">{{ j }}</a>
+                        </i>
+                    {% endif %}
+                {% endfor %}
+                {% if query_list.has_next %}
+                    <i class="page-item">
+                        <a class="page-link" href="?page={{ query_list.next_page_number }}">{{ query_list.next_page_number }}</a>
+                    </i>
+                    {% if query_list.next_page_number != query_list.paginator.num_pages %}
+                        <i class="page-item">
+                            <a class="page-link" href="?page={{ query_list.paginator.num_pages }}">{{ query_list.paginator.num_pages }}</a>
+                        </i>
+                    {% endif %}
+                    <a href="?page={{ query_list.next_page_number }}">>></a>
+                {% endif %}
+            </ul>
+        </div>
+    </main>
+</div>
+
 {% endblock %}

@@ -13,11 +13,11 @@ from content_data.models import MovieData
 from services.drivers.solarmovie import Solarmovie
 from services.drivers.moviesjoy import MoviesJoy
 
-MAX_ITEMS = 90
+MAX_ITEMS = 42
 
 
 def _retrieve_data() -> dict:
-    # Retrieves the movie data from MovieData databass model
+    # Retrieves the movie data from MovieData database model
     # and returns the data as a dictionary.
 
     data = MovieData.objects.all()
@@ -30,7 +30,7 @@ def _retrieve_data() -> dict:
 
 
 def insert(content) -> None:
-    # Inserts the specified content into the databass.
+    # Inserts the specified content into the database.
 
     try:
         movie = models.Movie(title=content.title, type=content.type, year=content.year, rating=content.rating,
@@ -74,14 +74,21 @@ def import_content(request) -> HttpResponse:
     return HttpResponse('')
 
 
+def _paginate(request, objects):
+    paginator = Paginator(objects, MAX_ITEMS)
+    page = request.GET.get('page')
+    paged_objects = paginator.get_page(page)
+
+    return paged_objects
+
+
 def index(request):
     movies = Movie.objects.all()
-    paginator = Paginator(movies, MAX_ITEMS)
-    page = request.GET.get('page')
-    paged_movies = paginator.get_page(page)
+    form = Search()
 
     context = {
-        'paged_movies': paged_movies
+        'paged_movies': _paginate(request, movies),
+        'form': form
     }
 
     return render(request, 'index.html', context)
@@ -127,8 +134,8 @@ def search(request):
             )
 
     context = {
+        'query_list': _paginate(request, queryset_list),
         'form': form,
-        'query_list': queryset_list,
     }
 
     return render(request, 'search.html', context)
