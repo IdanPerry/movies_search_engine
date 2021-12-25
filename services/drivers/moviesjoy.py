@@ -24,7 +24,8 @@ class MoviesJoy(Thread):
 
     MOVIES = 'https://moviesjoy.to/movie?page='
     TV_SHOWS = ''
-    PAGES = 40
+    MAX_PAGES = 1060
+    PAGES = 100
 
     def __init__(self, url: str):
         """

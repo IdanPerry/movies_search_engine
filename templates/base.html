@@ -2,55 +2,63 @@
 {% load static %}
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title></title>
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/base.css' %}">
-    <script src="https://kit.fontawesome.com/142c4189eb.js" crossorigin="anonymous"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styles/base.css' %}"
+    />
+    <script
+      src="https://kit.fontawesome.com/142c4189eb.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
+  </head>
 
-<body>
-    <div class="header-background-img" style="background-image:url('../static/img/background_5.jpg');">
-        <div class="container-header">
-            <header id="header">
-                <nav class="nav-header">
-                    <ul>
-                        <li class="fas fa-home"><a href="/">Home</a></li>
-                        <li class="fas fa-film"><a href="/">Movies</a></li>
-                        <li class="fas fa-tv"><a href="/">TV Shows</a></li>
-                        <li class="fas fa-star"><a href="/">Favorites</a></li>
-                        <li class="fas fa-search" id="search"></li>
-                    </ul>
-                    <button id="search-movies-btn">Search</button>
-                </nav>
-            </header>
-        </div>
-        <div class="title-container">
-            <h1>Movies Search Engine</h1>
-        </div>
+  <body>
+    <div
+      class="header-background-img"
+      style="background-image: url('../static/img/background_5.jpg')"
+    >
+      <div class="container-header">
+        <header id="header">
+          <nav class="nav-header">
+            <ul>
+              <li class="fas fa-home"><a href="/">Home</a></li>
+              <li class="fas fa-film"><a href="/">Movies</a></li>
+              <li class="fas fa-tv"><a href="/">TV Shows</a></li>
+              <!-- <li class="fas fa-star"><a href="/">Favorites</a></li> -->
+              <li class="fas fa-search" id="search"></li>
+            </ul>
+            <button id="search-movies-btn">Search</button>
+          </nav>
+        </header>
+      </div>
+      <div class="title-container">
+        <h1>Movies Search Engine</h1>
+      </div>
     </div>
 
-    {% block content %}
-    {% endblock %}
+    {% block content %} {% endblock %}
 
-    <div class="footer-background-img" style="background-image:url('static/img/background_2.jpg');">
-        <footer id="footer">
-            <div class="search-form-container">
-                <form action="{% url 'search' %}" method="get" novalidate>  
-                    {{ form.title }}
-                    {{ form.from_year }}
-                    {{ form.to_year }}
-                    {{ form.from_rating}}
-                    {{ form.to_rating }}
-                    {{ form.actors }}
-                    <button id="search-btn" type="submit">Search</button>
-                </form>
-            </div>
-        </footer>
+    <div
+      class="footer-background-img"
+      style="background-image: url('static/img/background_2.jpg')"
+    >
+      <footer id="footer">
+        <div class="search-form-container">
+          <form action="{% url 'search' %}" method="get" novalidate>
+            {{ form.title }} {{ form.from_year }} {{ form.to_year }} {{
+            form.from_rating}} {{ form.to_rating }} {{ form.actors }}
+            <button id="search-btn" type="submit">Search</button>
+          </form>
+        </div>
+      </footer>
     </div>
 
     <script src="{% static 'js/index.js' %}"></script>
-</body>
+  </body>
 </html>

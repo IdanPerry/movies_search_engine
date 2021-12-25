@@ -24,7 +24,8 @@ class Solarmovie(Thread):
 
     MOVIES = 'https://www2.solarmovie.to/movie/filter/movies/page-'
     TV_SHOWS = ''
-    PAGES = 40
+    MAX_PAGES = 550
+    PAGES = 100
 
     def __init__(self, url: str):
         """

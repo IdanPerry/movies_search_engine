@@ -125,7 +125,7 @@ class SolarMovie(Movie):
     def __init__(self, parent_tag):
         super().__init__(parent_tag)
         self.name = self._parent_tag.select_one(locators.Solarmovies.NAME).string
-        self.url = self._parent_tag.attrs['href']
+        self.url = self._parent_tag.attrs['href'].replace('.html', '/1-1/watching.html')
         self.image = self._parent_tag.select_one(locators.Solarmovies.IMAGE).attrs['data-src']
 
 
