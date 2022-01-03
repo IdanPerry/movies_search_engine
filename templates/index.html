@@ -5,25 +5,24 @@
   <main id="content-main">
     <div class="content">
       <ul>
-        {% for movie in paged_movies %}
+        {% for movie in movies %}
         <li>
-          <figure>
+          <div class="figure">
             <a href="{{ movie.url }}" target="_blank">
               <img src="{{ movie.image }}" alt="{{ movie.title }}"/>
             </a>
-            <figcaption>
-              <h4>{{ movie.title }}</h4>
-              <div class="year">
-                {% if movie.year != 0 %} {{ movie.year }} {% endif %}
-              </div>
-              <div class="rating">
-                {% if movie.rating != 0.0 %}
-                  <div class="rating-imdb">IMDb</div>
-                  <div class="rating-value">{{ movie.rating }}</div>
-                {% endif %}
-              </div>
-            </figcaption>
-          </figure>
+          </div>
+          <div class="figcaption">
+            <div class="year">
+              {% if movie.year != 0 %} {{ movie.year }} {% endif %}
+            </div>
+            <div class="rating">
+              {% if movie.rating != 0.0 %}
+                <div class="rating-imdb">IMDb</div>
+                <div class="rating-value">{{ movie.rating }}</div>
+              {% endif %}
+            </div>
+          </div>
         </li>
         {% endfor %}
       </ul>
@@ -31,39 +30,39 @@
 
     <div class="pagination-container">
       <ul class="pagination">
-        {% if paged_movies.has_previous %}
+        {% if movies.has_previous %}
           <i class="page-item">
-            <a href="?page={{ paged_movies.previous_page_number }}"><<</a>
+            <a href="?page={{ movies.previous_page_number }}"><<</a>
             <a class="page-link" href="?page=1">1</a>
           </i>
         {% endif %}
-        {% if paged_movies.previous_page_number != 1 %}
+        {% if movies.previous_page_number != 1 %}
           <i class="page-item">
             <a class="page-link"
-               href="?page={{ paged_movies.previous_page_number }}">
-               {{ paged_movies.previous_page_number }}</a>
+               href="?page={{ movies.previous_page_number }}">
+               {{ movies.previous_page_number }}</a>
           </i>
         {% endif %}
-        {% for j in paged_movies.paginator.page_range %}
-            {% if paged_movies.number == j %}
+        {% for j in movies.paginator.page_range %}
+            {% if movies.number == j %}
               <i class="page-item active">
                 <a class="page-link active">{{ j }}</a>
               </i>
             {% endif %}
         {% endfor %}
-        {% if paged_movies.has_next %}
+        {% if movies.has_next %}
           <i class="page-item">
-            <a class="page-link" href="?page={{ paged_movies.next_page_number }}">
-              {{ paged_movies.next_page_number }}</a>
+            <a class="page-link" href="?page={{ movies.next_page_number }}">
+              {{ movies.next_page_number }}</a>
           </i>
-          {% if paged_movies.next_page_number != paged_movies.paginator.num_pages %}
+          {% if movies.next_page_number != movies.paginator.num_pages %}
             <i class="page-item">
             <a class="page-link"
-               href="?page={{ paged_movies.paginator.num_pages }}">
-               {{ paged_movies.paginator.num_pages }}</a>
+               href="?page={{ movies.paginator.num_pages }}">
+               {{ movies.paginator.num_pages }}</a>
             </i>
           {% endif %}
-          <a href="?page={{ paged_movies.next_page_number }}">>></a>
+          <a href="?page={{ movies.next_page_number }}">>></a>
         {% endif %}
       </ul>
     </div>

@@ -83,11 +83,11 @@ def _paginate(request, objects):
 
 
 def index(request):
-    movies = Movie.objects.all()
+    movies = _paginate(request, Movie.objects.all())
     form = Search()
 
     context = {
-        'paged_movies': _paginate(request, movies),
+        'movies': movies,
         'form': form
     }
 
@@ -96,7 +96,6 @@ def index(request):
 
 def search(request):
     form = Search()
-
     queryset_list = None
 
     if request.GET:
